@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM buildpack-deps:jessie
 
 # ensure local python is preferred over distribution python
 ENV PATH /usr/local/bin:$PATH
@@ -11,20 +11,6 @@ ENV LANG C.UTF-8
 RUN apt-get update && apt-get install -y \
         tcl \
         tk \
-		ca-certificates \
-		libgdbm3 \
-		libsqlite3-0 \
-		libssl1.0.0 \
-        python-pip \
-        python-setuptools \
-        python-dev \
-        build-essential \
-        libssl-dev \
-        libjpeg62-turbo-dev \
-        libjpeg62 \
-        git \
-		sudo \
-		curl \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV GPG_KEY C01E1CAD5EA2C4F0B8E3571504C367C218ADD4FF
@@ -77,6 +63,22 @@ RUN set -ex \
         \) -exec rm -rf '{}' + \
     && apt-get purge -y --auto-remove $buildDeps \
     && rm -rf /usr/src/python ~/.cache
+
+RUN apt-get update && apt-get install -y \
+        ca-certificates \
+        libgdbm3 \
+        libsqlite3-0 \
+        libssl1.0.0 \
+        python-pip \
+        python-setuptools \
+        python-dev \
+        build-essential \
+        libssl-dev \
+        libjpeg62-turbo-dev \
+        libjpeg62 \
+        git \
+        sudo \
+        curl
 
 # install "virtualenv", since the vast majority of users of this image will want it
 RUN pip install --no-cache-dir virtualenv
