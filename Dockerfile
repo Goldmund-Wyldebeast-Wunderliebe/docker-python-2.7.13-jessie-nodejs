@@ -9,7 +9,7 @@ ENV LANG C.UTF-8
 
 # runtime dependencies
 RUN apt-get update && apt-get install -y \
-        tlc \
+        tcl \
         tk \
 		ca-certificates \
 		libgdbm3 \
