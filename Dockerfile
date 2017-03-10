@@ -65,26 +65,42 @@ RUN set -ex \
     && rm -rf /usr/src/python ~/.cache
 
 RUN apt-get update && apt-get install -y \
+        build-essential \
         ca-certificates \
+        curl \
+        git \
+        libbz2-dev \
+        libc6-dev \
         libgdbm3 \
+        libjpeg62 \
+        libjpeg62 \
+        libjpeg62-turbo-dev \
         libsqlite3-0 \
+        libssl-dev \
+        libssl-dev \
         libssl1.0.0 \
+        libxml2 \
+        libxml2-dev \
+        libxmlsec1 \
+        libxmlsec1-dev \
+        libxslt1-dev \
+        libxslt1.1 \
+        locales \
+        python-dev \
         python-pip \
         python-setuptools \
-        python-dev \
-        build-essential \
-        libssl-dev \
-        libjpeg62-turbo-dev \
-        libjpeg62 \
-        git \
-        sudo \
-        curl
+        rsync \
+        sudo
 
 # install "virtualenv", since the vast majority of users of this image will want it
 RUN pip install --no-cache-dir virtualenv
 
+# Install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 RUN apt-get install -y nodejs
+# Install nvm
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+
+RUN apt-get update && apt-get upgrade -y
 
 CMD ["python3"]
